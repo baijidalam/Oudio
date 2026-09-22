@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login Page</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  padding:0;
+  height:100vh;
+  background:#050a14;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:Arial;
+}
+
+/* =========================
+   ROTATING CIRCLE
+========================= */
+
+.circle{
+  position:absolute;
+  width:430px;
+  height:430px;
+  border-radius:50%;
+  border:8px dashed #00f0ff;
+  z-index:2;
+  pointer-events:none;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  box-sizing:border-box;
+  animation:rotate 10s linear infinite;
+}
+
+@keyframes rotate{
+
+  0%{
+    transform:translate(-50%,-50%) rotate(0deg);
+  }
+
+  100%{
+    transform:translate(-50%,-50%) rotate(360deg);
+  }
+
+}
+
+/* =========================
+   MATRIX BACKGROUND
+========================= */
+
+#md-baijid-background{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#050a14;
+  pointer-events:none;
+  z-index:0;
+}
+
+#md-baijid-matrix{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#050a14;
+  z-index:1;
+}
+
+#md-baijid-matrix .md-baijid-rain{
+  position:absolute;
+  top:0;
+  height:100%;
+  overflow:hidden;
+}
+
+#md-baijid-matrix .md-baijid-track{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  transform:translate3d(0,-50%,0);
+  animation:mdBaijidMatrixDown linear infinite;
+  will-change:transform;
+}
+
+@keyframes mdBaijidMatrixDown{
+
+  from{
+    transform:translate3d(0,-50%,0);
+  }
+
+  to{
+    transform:translate3d(0,0,0);
+  }
+
+}
+
+#md-baijid-matrix .md-baijid-stream{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  flex-shrink:0;
+}
+
+#md-baijid-matrix .md-baijid-stream span{
+  display:block;
+  height:22px;
+  line-height:22px;
+  font-size:17px;
+  font-weight:600;
+  text-align:center;
+  white-space:nowrap;
+  color:rgba(57,255,136,.58);
+  text-shadow:
+    0 0 2px rgba(57,255,136,.40),
+    0 0 5px rgba(57,255,136,.12);
+}
+
+#md-baijid-matrix .md-baijid-stream span:nth-child(3n){
+  opacity:.82;
+}
+
+#md-baijid-matrix .md-baijid-stream span:nth-child(5n){
+  opacity:.70;
+}
+
+#md-baijid-matrix .md-baijid-stream span:nth-child(7n){
+  opacity:.56;
+}
+
+#md-baijid-matrix .md-baijid-stream span:nth-child(11n){
+  opacity:.44;
+}
+
+#md-baijid-matrix .md-baijid-stream span:nth-child(17n){
+  opacity:.32;
+}
+
+/* =========================
+   MOVING NAMES
+========================= */
+
+#md-baijid-names{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:3;
+}
+
+.md-baijid-name{
+  position:absolute;
+  color:#7affaa;
+  font-family:monospace;
+  font-size:19px;
+  font-weight:800;
+  letter-spacing:1px;
+  white-space:nowrap;
+  opacity:0;
+  text-shadow:
+    0 0 4px #7affaa,
+    0 0 9px #39ff88,
+    0 0 15px rgba(57,255,136,.60);
+  animation:mdBaijidNameDown linear infinite;
+  will-change:transform,opacity;
+}
+
+@keyframes mdBaijidNameDown{
+
+  0%{
+    transform:translate3d(0,-80px,0);
+    opacity:0;
+  }
+
+  7%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:1;
+  }
+
+  90%{
+    opacity:.92;
+  }
+
+  100%{
+    transform:translate3d(0,calc(100vh + 80px),0);
+    opacity:0;
+  }
+
+}
+
+/* =========================
+   LOGIN BOX
+========================= */
+
+.login-box{
+
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+
+  padding:42px;
+
+  border-radius:16px;
+
+  z-index:10;
+
+  text-align:center;
+
+  background:
+    radial-gradient(
+      120% 140% at 10% 0%,
+      rgba(0,255,255,0.18),
+      transparent 40%
+    ),
+    radial-gradient(
+      120% 140% at 90% 100%,
+      rgba(0,170,255,0.18),
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(0,220,255,0.12),
+      rgba(0,140,255,0.06)
+    );
+
+  backdrop-filter:blur(14px) saturate(140%);
+
+  -webkit-backdrop-filter:
+    blur(14px) saturate(140%);
+
+  border:
+    1px solid rgba(0,240,255,0.25);
+
+  box-shadow:
+    0 8px 30px rgba(0,200,255,0.18),
+    inset 0 0 24px rgba(0,220,255,0.18);
+
+  animation:
+    edxGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes edxGlow{
+
+  0%{
+    box-shadow:
+      0 8px 24px rgba(0,200,255,0.14),
+      inset 0 0 18px rgba(0,220,255,0.14);
+  }
+
+  100%{
+    box-shadow:
+      0 12px 36px rgba(0,200,255,0.22),
+      inset 0 0 28px rgba(0,220,255,0.22);
+  }
+
+}
+
+.login-box h2{
+  color:#00f0ff;
+}
+
+.login-box input{
+
+  width:100%;
+
+  padding:10px;
+
+  margin:10px 0;
+
+  background:rgba(0,0,0,0.6);
+
+  border:none;
+
+  border-radius:5px;
+
+  color:#00eaff;
+
+  font-weight:bold;
+
+  box-sizing:border-box;
+}
+
+::placeholder{
+  color:#00eaff;
+}
+
+.login-box button{
+
+  width:100%;
+
+  padding:10px;
+
+  margin-top:10px;
+
+  background:#00f0ff;
+
+  border:none;
+
+  border-radius:5px;
+
+  color:#000;
+
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+#errorMsg{
+
+  font-family:'Orbitron';
+
+  letter-spacing:2px;
+
+  margin-top:10px;
+
+  font-size:12px;
+}
+
+/* =========================
+   ERROR SHAKE
+========================= */
+
+.login-box.error{
+
+  animation:
+    shake .3s,
+    redGlow 1s ease-in-out 2;
+
+}
+
+@keyframes shake{
+
+  0%{
+    transform:
+      translate(-50%,-50%)
+      translateX(0);
+  }
+
+  25%{
+    transform:
+      translate(-50%,-50%)
+      translateX(-5px);
+  }
+
+  50%{
+    transform:
+      translate(-50%,-50%)
+      translateX(5px);
+  }
+
+  75%{
+    transform:
+      translate(-50%,-50%)
+      translateX(-5px);
+  }
+
+  100%{
+    transform:
+      translate(-50%,-50%)
+      translateX(0);
+  }
+
+}
+
+@keyframes redGlow{
+
+  0%{
+    box-shadow:0 0 10px #ff0000;
+  }
+
+  50%{
+    box-shadow:0 0 25px #ff0000;
+  }
+
+  100%{
+    box-shadow:0 0 10px #ff0000;
+  }
+
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.dev-footer{
+
+  position:fixed;
+
+  bottom:0;
+  left:0;
+
+  width:100%;
+
+  background:rgba(30,60,90,0.45);
+
+  text-align:center;
+
+  padding:8px 5px;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:12px;
+
+  z-index:9999;
+
+  backdrop-filter:blur(6px);
+}
+
+.sky{
+  color:#00eaff;
+  font-size:12px;
+}
+
+.stylish{
+
+  font-family:'Orbitron',sans-serif;
+
+  color:#00ff88;
+
+  font-weight:600;
+
+  letter-spacing:1px;
+
+  font-size:12px;
+
+  text-decoration:none;
+
+  padding:2px 6px;
+
+  border-radius:6px;
+
+  text-shadow:
+    0 0 4px #00ff88,
+    0 0 8px #00ff88;
+
+  transition:.3s;
+
+  display:inline-block;
+}
+
+.stylish:hover{
+
+  color:#00ffd5;
+
+  text-shadow:
+    0 0 6px #00ffd5,
+    0 0 12px #00ffd5;
+
+  transform:scale(1.05);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:480px){
+
+  .circle{
+
+    width:320px;
+
+    height:320px;
+
+    border-width:7px;
+  }
+
+  .login-box{
+
+    width:calc(100% - 70px);
+
+    padding:30px 20px;
+
+    box-sizing:border-box;
+  }
+
+  .login-box h2{
+    font-size:20px;
+  }
+
+  .md-baijid-name{
+    font-size:17px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =========================
+     MATRIX BACKGROUND
+========================= -->
+
+<div id="md-baijid-background">
+
+  <div id="md-baijid-matrix"></div>
+
+  <div id="md-baijid-names">
+
+    <div class="md-baijid-name"
+      style="left:6%;animation-duration:12s;animation-delay:-2s;">
+      MDBAIJID
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:44%;animation-duration:14s;animation-delay:-7s;">
+      BAIJID
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:82%;animation-duration:13s;animation-delay:-10s;">
+      mdbaijid
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:25%;animation-duration:15s;animation-delay:-5s;">
+      MDBAIJID
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:63%;animation-duration:12s;animation-delay:-10s;">
+      @baijid
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:90%;animation-duration:16s;animation-delay:-14s;">
+      BAIJID
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:14%;animation-duration:13s;animation-delay:-8s;">
+      DARKCYBER
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:55%;animation-duration:15s;animation-delay:-3s;">
+      @BAIJID
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:74%;animation-duration:11s;animation-delay:-9s;">
+      DARK
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:35%;animation-duration:16s;animation-delay:-11s;">
+      CyBeR
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:68%;animation-duration:13s;animation-delay:-5s;">
+      CyBer
+    </div>
+
+    <div class="md-baijid-name"
+      style="left:20%;animation-duration:14s;animation-delay:-12s;">
+      CYBER
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ROTATING CIRCLE -->
+
+<div class="circle"></div>
+
+
+<!-- =========================
+     LOGIN BOX
+========================= -->
+
+<div class="login-box">
+
+  <h2>☠ BAIJID PORTAL LOGIN ☠</h2>
+
+  <form id="loginForm">
+
+    <input
+      id="username"
+      type="text"
+      placeholder="Enter user name"
+      required
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Enter password"
+      required
+    >
+
+    <button type="submit">
+      ⚠ Login ⚠
+    </button>
+
+  </form>
+
+  <p
+    id="errorMsg"
+    style="display:none;"
+  ></p>
+
+</div>
+
+
+<!-- =========================
+     AUDIO
+========================= -->
+
+<!-- 1. Page Background Sound -->
+
+<audio
+  id="pageSound"
+  loop
+  preload="auto"
+>
+
+  <source
+    src="https://raw.githubusercontent.com/baijidalam/Oudio/main/page.m4a"
+    type="audio/mp4"
+  >
+
+</audio>
+
+
+<!-- 2. Wrong Password Sound -->
+
+<audio
+  id="wrongSound"
+  preload="auto"
+>
+
+  <source
+    src="https://raw.githubusercontent.com/baijidalam/Oudio/main/worng.m4a"
+    type="audio/mp4"
+  >
+
+</audio>
+
+
+<!-- 3. Access Granted Sound -->
+
+<audio
+  id="grantedSound"
+  preload="auto"
+>
+
+  <source
+    src="https://raw.githubusercontent.com/baijidalam/Oudio/main/Access%20Granted.m4a"
+    type="audio/mp4"
+  >
+
+</audio>
+
+
+<!-- =========================
+     MATRIX JAVASCRIPT
+========================= -->
+
+<script>
+
+(function(){
+
+  "use strict";
+
+  const matrix =
+    document.getElementById(
+      "md-baijid-matrix"
+    );
+
+  if(!matrix) return;
+
+
+  const columnWidth = 30;
+  const lineHeight = 22;
+
+
+  function createStream(){
+
+    const stream =
+      document.createElement("div");
+
+    stream.className =
+      "md-baijid-stream";
+
+
+    const count =
+      Math.ceil(
+        window.innerHeight /
+        lineHeight
+      ) + 20;
+
+
+    const chars =
+      "12345678900000000000@baijidalamallallrafi@bskbsjksvjakvjwhs";
+
+
+    for(
+      let i = 0;
+      i < count;
+      i++
+    ){
+
+      const span =
+        document.createElement("span");
+
+
+      span.textContent =
+        chars.charAt(
+          Math.floor(
+            Math.random() *
+            chars.length
+          )
+        );
+
+
+      stream.appendChild(span);
+
+    }
+
+
+    return stream;
+
+  }
+
+
+  function createMatrix(){
+
+    matrix.innerHTML = "";
+
+
+    const columns =
+      Math.ceil(
+        window.innerWidth /
+        columnWidth
+      );
+
+
+    for(
+      let i = 0;
+      i < columns;
+      i++
+    ){
+
+      const rain =
+        document.createElement("div");
+
+      rain.className =
+        "md-baijid-rain";
+
+
+      rain.style.left =
+        (i * columnWidth) + "px";
+
+
+      rain.style.width =
+        columnWidth + "px";
+
+
+      const stream1 =
+        createStream();
+
+
+      const stream2 =
+        stream1.cloneNode(true);
+
+
+      const track =
+        document.createElement("div");
+
+
+      track.className =
+        "md-baijid-track";
+
+
+      track.appendChild(stream1);
+
+      track.appendChild(stream2);
+
+
+      const duration =
+        6.2 +
+        Math.random() * 2.4;
+
+
+      track.style.animationDuration =
+        duration + "s";
+
+
+      track.style.animationDelay =
+        (-Math.random() * duration) + "s";
+
+
+      rain.appendChild(track);
+
+      matrix.appendChild(rain);
+
+    }
+
+  }
+
+
+  createMatrix();
+
+
+  let resizeTimer;
+
+
+  window.addEventListener(
+    "resize",
+    function(){
+
+      clearTimeout(resizeTimer);
+
+      resizeTimer =
+        setTimeout(
+          createMatrix,
+          250
+        );
+
+    }
+  );
+
+})();
+
+</script>
+
+
+<!-- =========================
+     LOGIN JAVASCRIPT
+========================= -->
+
+<script>
+
+/* =====================================================
+   24 HOURS LOGIN MEMORY
+===================================================== */
+
+const LOGIN_STORAGE_KEY =
+  "baijid_portal_login_time";
+
+const LOGIN_DURATION =
+  00 * 00 * 00 * 0000;
+
+/* =========================
+   CHECK 24 HOUR LOGIN
+========================= */
+
+function hasValidLogin(){
+
+  const savedTime =
+    localStorage.getItem(
+      LOGIN_STORAGE_KEY
+    );
+
+
+  /* No previous login */
+
+  if(!savedTime){
+
+    return false;
+
+  }
+
+
+  const loginTime =
+    Number(savedTime);
+
+
+  const currentTime =
+    Date.now();
+
+
+  const timePassed =
+    currentTime - loginTime;
+
+
+  /*
+     যদি ২৪ ঘণ্টার কম হয়ে থাকে
+     তাহলে login এখনো valid
+  */
+
+  if(
+    timePassed >= 0 &&
+    timePassed < LOGIN_DURATION
+  ){
+
+    return true;
+
+  }
+
+
+  /*
+     ২৪ ঘণ্টা শেষ হয়ে গেছে
+     তাই পুরোনো login মুছে ফেলি
+  */
+
+  localStorage.removeItem(
+    LOGIN_STORAGE_KEY
+  );
+
+
+  return false;
+
+}
+
+
+/* =========================
+   IF ALREADY LOGGED IN
+========================= */
+
+if(hasValidLogin()){
+
+  /*
+     গত ২৪ ঘণ্টার মধ্যে login করা আছে।
+     তাই login form দেখানোর দরকার নেই।
+  */
+
+  window.location.replace(
+    'https://baijidalam.github.io/dark-cyber-homepage/'
+  );
+
+}
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const form =
+  document.getElementById(
+    'loginForm'
+  );
+
+
+const box =
+  document.querySelector(
+    '.login-box'
+  );
+
+
+const errorMsg =
+  document.getElementById(
+    'errorMsg'
+  );
+
+
+const pageSound =
+  document.getElementById(
+    'pageSound'
+  );
+
+
+const wrongSound =
+  document.getElementById(
+    'wrongSound'
+  );
+
+
+const grantedSound =
+  document.getElementById(
+    'grantedSound'
+  );
+
+
+/* =========================
+   LOGIN VARIABLES
+========================= */
+
+let attempts = 0;
+
+let locked = false;
+
+let countdown = 30;
+
+let timerInterval = null;
+
+
+/* =========================
+   PAGE BACKGROUND SOUND
+========================= */
+
+function startPageSound(){
+
+  /*
+     যদি valid login থাকে,
+     তাহলে background sound চালানোর
+     দরকার নেই কারণ redirect হবে।
+  */
+
+  if(hasValidLogin()){
+
+    return;
+
+  }
+
+
+  pageSound.volume = 0.35;
+
+  pageSound
+    .play()
+    .catch(() => {});
+
+}
+
+
+startPageSound();
+
+
+/* Mobile autoplay */
+
+document.addEventListener(
+  'click',
+  startPageSound,
+  {once:true}
+);
+
+document.addEventListener(
+  'touchstart',
+  startPageSound,
+  {once:true}
+);
+
+document.addEventListener(
+  'keydown',
+  startPageSound,
+  {once:true}
+);
+
+
+/* =========================
+   TYPE TEXT
+========================= */
+
+function typeText(text){
+
+  errorMsg.innerHTML = "";
+
+  let i = 0;
+
+
+  function typing(){
+
+    if(i < text.length){
+
+      errorMsg.innerHTML +=
+        text.charAt(i);
+
+      i++;
+
+      setTimeout(
+        typing,
+        50
+      );
+
+    }
+
+  }
+
+
+  typing();
+
+}
+
+
+/* =========================
+   30 SECOND LOCK
+========================= */
+
+function startTimer(){
+
+  locked = true;
+
+  countdown = 30;
+
+
+  errorMsg.style.display =
+    "block";
+
+  errorMsg.style.color =
+    "#ff2b2b";
+
+
+  if(timerInterval !== null){
+
+    clearInterval(
+      timerInterval
+    );
+
+  }
+
+
+  errorMsg.innerHTML =
+    `TRY AGAIN ${countdown}s`;
+
+
+  timerInterval =
+    setInterval(
+
+      () => {
+
+        countdown--;
+
+
+        if(countdown <= 0){
+
+          clearInterval(
+            timerInterval
+          );
+
+
+          timerInterval = null;
+
+          locked = false;
+
+          attempts = 0;
+
+          countdown = 30;
+
+
+          errorMsg.innerHTML =
+            "YOU CAN TRY AGAIN";
+
+          errorMsg.style.color =
+            "#00ff88";
+
+
+          setTimeout(
+            () => {
+
+              errorMsg.innerHTML =
+                "";
+
+              errorMsg.style.display =
+                "none";
+
+            },
+            1500
+          );
+
+
+          return;
+
+        }
+
+
+        errorMsg.innerHTML =
+          `TRY AGAIN ${countdown}s`;
+
+      },
+
+      1000
+
+    );
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+form.addEventListener(
+  'submit',
+  function(e){
+
+    e.preventDefault();
+
+
+    if(locked){
+
+      return;
+
+    }
+
+
+    const u =
+      document
+        .getElementById(
+          'username'
+        )
+        .value
+        .trim();
+
+
+    const p =
+      document
+        .getElementById(
+          'password'
+        )
+        .value
+        .trim();
+
+
+    /* =========================
+       CORRECT LOGIN
+    ========================= */
+
+    if(
+      u === 'BAIJID' &&
+      p === 'BAIJID@'
+    ){
+
+      /*
+         ==========================================
+         SAVE SUCCESSFUL LOGIN TIME
+         ==========================================
+
+         এখান থেকেই ২৪ ঘণ্টার timer শুরু হবে।
+      */
+
+      localStorage.setItem(
+        LOGIN_STORAGE_KEY,
+        Date.now().toString()
+      );
+
+
+      errorMsg.style.display =
+        "block";
+
+      errorMsg.style.color =
+        "#00ff88";
+
+
+      /* Stop background */
+
+      pageSound.pause();
+
+      pageSound.currentTime = 0;
+
+
+      /* Access Granted Sound */
+
+      grantedSound.currentTime = 0;
+
+      grantedSound.volume = 1;
+
+      grantedSound
+        .play()
+        .catch(() => {});
+
+
+      typeText(
+        "✅ ACCESS GRANTED"
+      );
+
+
+      /* Redirect after 3 seconds */
+
+      setTimeout(
+        () => {
+
+          window.location.href =
+            'https://baijidalam.github.io/dark-cyber-homepage/';
+
+        },
+        3000
+      );
+
+
+      return;
+
+    }
+
+
+    /* =========================
+       WRONG PASSWORD
+    ========================= */
+
+    attempts++;
+
+
+    errorMsg.style.display =
+      "block";
+
+    errorMsg.style.color =
+      "#ff2b2b";
+
+
+    /* Shake */
+
+    box.classList.add(
+      "error"
+    );
+
+
+    /* Wrong password sound */
+
+    wrongSound.currentTime = 0;
+
+    wrongSound.volume = 1;
+
+    wrongSound
+      .play()
+      .catch(() => {});
+
+
+    /* 3 attempts = 30 sec lock */
+
+    if(attempts >= 3){
+
+      typeText(
+        "❌ TOO MANY ATTEMPTS"
+      );
+
+
+      startTimer();
+
+    }
+
+    else{
+
+      typeText(
+        "❌ ACCESS DENIED"
+      );
+
+    }
+
+
+    setTimeout(
+      () => {
+
+        box.classList.remove(
+          "error"
+        );
+
+      },
+      1200
+    );
+
+  }
+);
+
+</script>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<div class="dev-footer">
+
+  <span class="sky">
+    Developed by
+  </span>
+
+
+  <a
+    href="https://baijidalam.github.io/my-contac-details/"
+    target="_blank"
+    class="stylish"
+  >
+    MD BAIJID ALAM 🧑‍💻
+  </a>
+
+
+  <span class="sky">
+    Join our
+  </span>
+
+
+  <a
+    href="https://t.me/+qPKvzfv0c8BiMDY1"
+    target="_blank"
+    class="stylish"
+  >
+    Telegram
+  </a>
+
+</div>
+
+
+</body>
+</html>

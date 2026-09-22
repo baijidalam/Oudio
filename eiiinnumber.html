@@ -1,0 +1,4014 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BAIJID DARK CYBER 2.5 - EIIN NUMBER TO INFO</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --green:#00ff9c;
+    --purple:#9b5cff;
+    --cyan:#00e5ff;
+    --whatsapp:#25D366;
+    --telegram:#2AABEE;
+    --bg:#05070b;
+    --card:rgba(14,19,27,.78);
+    --border:rgba(255,255,255,.09);
+    --muted:#8b95a5;
+    --red:#ff4d6d;
+    --pink:#ff4d9e;
+}
+
+body{
+    min-height:100vh;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 10% 15%,#ff005522,transparent 30%),
+        radial-gradient(circle at 90% 20%,#00e5ff20,transparent 30%),
+        radial-gradient(circle at 50% 90%,#25D36615,transparent 35%),
+        var(--bg);
+    overflow-x:hidden;
+    position:relative;
+}
+
+.page-scan-line{
+    position:fixed;
+    left:0;
+    width:100%;
+    height:2px;
+    pointer-events:none;
+    z-index:99990;
+    background:linear-gradient(90deg, transparent, var(--cyan), #ff0055, var(--cyan), transparent);
+    box-shadow:0 0 12px var(--cyan), 0 0 24px rgba(0,229,255,0.4);
+    opacity:0.7;
+    will-change:transform,opacity;
+    transform:translateY(0);
+}
+
+.page-scan-line.line1{
+    animation:pageScan1 4.5s linear infinite;
+}
+
+.page-scan-line.line2{
+    animation:pageScan2 4.5s linear infinite;
+    animation-delay:2.25s;
+    background:linear-gradient(90deg,transparent,#ff0055,var(--cyan),#ff0055,transparent);
+    box-shadow:0 0 12px #ff0055,0 0 24px rgba(255,0,85,0.35);
+}
+
+@keyframes pageScan1{
+    0%{transform:translateY(0);opacity:.3}
+    10%{opacity:.85}
+    90%{opacity:.85}
+    100%{transform:translateY(100vh);opacity:.3}
+}
+
+@keyframes pageScan2{
+    0%{transform:translateY(0);opacity:.3}
+    10%{opacity:.75}
+    90%{opacity:.75}
+    100%{transform:translateY(100vh);opacity:.3}
+}
+
+#splashOverlay{
+    position:fixed;
+    inset:0;
+    background:#020408;
+    z-index:99999;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    font-family:'Courier New',Courier,monospace;
+    transition:opacity .5s ease;
+}
+
+.scanner-box{
+    width:min(340px,90%);
+    background:rgba(0,229,255,.03);
+    border:2px solid rgba(0,229,255,.3);
+    border-radius:20px;
+    padding:30px 20px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(0,229,255,.15),inset 0 0 20px rgba(0,229,255,.05);
+    position:relative;
+    overflow:hidden;
+}
+
+.scanner-box::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:3px;
+    background:var(--cyan);
+    box-shadow:0 0 15px var(--cyan);
+    animation:scanLine 2s linear infinite;
+}
+
+@keyframes scanLine{
+    0%{top:0%;opacity:.8}
+    50%{opacity:1}
+    100%{top:100%;opacity:.8}
+}
+
+.fingerprint-icon{
+    width:110px;
+    height:110px;
+    margin:0 auto 20px;
+    cursor:pointer;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(0,229,255,.13) 0%,rgba(0,229,255,.035) 48%,transparent 72%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    color:var(--cyan);
+    transition:background .3s ease,box-shadow .3s ease,transform .25s ease;
+    box-shadow:0 0 10px rgba(0,229,255,.18),0 0 24px rgba(0,229,255,.10),inset 0 0 18px rgba(0,229,255,.06);
+}
+
+.fingerprint-icon::before{
+    content:"";
+    position:absolute;
+    inset:-6px;
+    border-radius:50%;
+    border:2.5px dashed rgba(0,229,255,.55);
+    animation:spinCircle 6s linear infinite;
+    pointer-events:none;
+}
+
+.fingerprint-icon::after{
+    content:"";
+    position:absolute;
+    inset:2px;
+    border-radius:50%;
+    border:1px solid rgba(0,229,255,.2);
+    pointer-events:none;
+}
+
+@keyframes spinCircle{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+}
+
+.fingerprint-icon .fingerprint-svg{
+    width:62px;
+    height:62px;
+    color:var(--cyan);
+    filter:drop-shadow(0 0 8px rgba(0,229,255,.65));
+    transition:transform .25s ease,filter .25s ease;
+    z-index:2;
+    position:relative;
+    overflow:visible;
+}
+
+.fingerprint-icon.scanning{
+    background:radial-gradient(circle,rgba(0,229,255,.22) 0%,rgba(0,229,255,.07) 48%,transparent 74%);
+    box-shadow:0 0 14px rgba(0,229,255,.42),0 0 34px rgba(0,229,255,.28),inset 0 0 22px rgba(0,229,255,.10);
+    transform:scale(1.015);
+}
+
+.fingerprint-icon.scanning .fingerprint-svg{
+    transform:scale(1.08);
+    filter:drop-shadow(0 0 14px var(--cyan)) drop-shadow(0 0 28px rgba(0,229,255,.85));
+}
+
+.fingerprint-icon.scanning::before{
+    animation-duration:1.2s;
+    border-color:rgba(0,229,255,.9);
+    box-shadow:0 0 10px rgba(0,229,255,.45),0 0 22px rgba(0,229,255,.2);
+}
+
+.scanner-title{
+    color:var(--cyan);
+    font-size:16px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:8px;
+    text-transform:uppercase;
+}
+
+.scanner-desc{
+    color:var(--green);
+    font-size:12px;
+    margin-bottom:20px;
+    line-height:1.4;
+    font-weight:600;
+}
+
+.scan-progress-bar{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,.08);
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.scan-progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00e5ff,#ff0055);
+    box-shadow:0 0 10px var(--cyan);
+    transition:width .08s linear;
+}
+
+.scan-status-text{
+    font-size:12px;
+    color:var(--cyan);
+    margin-top:10px;
+    font-weight:bold;
+    min-height:18px;
+}
+
+body:before,
+body:after{
+    content:"";
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    filter:blur(110px);
+    z-index:-1;
+    animation:float 8s ease-in-out infinite alternate;
+}
+
+body:before{
+    left:-130px;
+    top:25%;
+    background:#ff005518;
+}
+
+body:after{
+    right:-130px;
+    bottom:15%;
+    background:#00e5ff18;
+    animation-delay:2s;
+}
+
+@keyframes float{
+    from{transform:translateY(-35px) scale(.9)}
+    to{transform:translateY(40px) scale(1.15)}
+}
+
+.nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:16px 4%;
+    background:#05070bdd;
+    border-bottom:1px solid #ffffff0a;
+    backdrop-filter:blur(20px);
+    gap:10px;
+}
+
+.logo{
+    font-size:clamp(13px,3.8vw,17px);
+    font-weight:900;
+    letter-spacing:.5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    text-align:center;
+    margin:0 auto;
+}
+
+.brand-highlight{
+    background:linear-gradient(135deg,#ff0055,#00ff9c,#00e5ff,#ff0055);
+    background-size:300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 10px rgba(255,0,85,.4));
+    animation:gradient 4s linear infinite;
+}
+
+.nav-buttons-left,
+.nav-buttons-right{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.nav-buttons-right{
+    position:absolute;
+    right:4%;
+}
+
+.nav-buttons-left{
+    display:none;
+}
+
+.btn-social{
+    text-decoration:none;
+    color:#fff;
+    padding:7px 12px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.3s;
+}
+
+.btn-telegram{
+    background:linear-gradient(135deg,#00b4db,#00e5ff);
+    color:#00150d;
+    box-shadow:0 0 15px rgba(0,229,255,.3);
+}
+
+.telegram-icon{
+    width:16px;
+    height:16px;
+    flex:0 0 16px;
+    display:block;
+    margin-right:5px;
+}
+
+.btn-social:hover{
+    transform:translateY(-2px);
+}
+
+.container{
+    width:min(980px,92%);
+    margin:auto;
+}
+
+.hero{
+    text-align:center;
+    padding:35px 0 20px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 14px;
+    border-radius:50px;
+    color:var(--cyan);
+    background:#00e5ff09;
+    border:1px solid #00e5ff2b;
+    font-size:11px;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+.badge-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 12px var(--cyan);
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{opacity:.35;transform:scale(.7)}
+}
+
+h1{
+    font-size:clamp(28px,6vw,50px);
+    line-height:1.1;
+    font-weight:950;
+    letter-spacing:-1px;
+    background:linear-gradient(90deg,#ff0055,#00e5ff,#25D366,#ff0055);
+    background-size:300%;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:gradient 4s linear infinite;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#ff0055,#00e5ff,#25D366,#ff0055);
+    background-size:300%;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:gradient 4s linear infinite;
+}
+
+@keyframes gradient{
+    to{background-position:300%}
+}
+
+.hero p{
+    max-width:650px;
+    margin:12px auto 0;
+    color:var(--red);
+    line-height:1.6;
+    font-size:13px;
+    font-weight:600;
+}
+
+.visitors{
+    display:flex;
+    justify-content:center;
+    margin:20px 0;
+}
+
+.visitor-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:12px 18px;
+    border-radius:15px;
+    background:#ffffff06;
+    border:1px solid #ffffff0c;
+    backdrop-filter:blur(15px);
+}
+
+.live{
+    color:var(--cyan);
+    font-size:11px;
+    font-weight:bold;
+}
+
+.live-dot{
+    display:inline-block;
+    width:7px;
+    height:7px;
+    margin-right:5px;
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 12px var(--cyan);
+}
+
+.divider{
+    width:1px;
+    height:22px;
+    background:#ffffff12;
+}
+
+.number{
+    font-weight:bold;
+    font-size:13px;
+    color:var(--pink);
+}
+
+.visitor-label{
+    color:var(--green);
+    font-size:9px;
+    font-weight:600;
+}
+
+.search-box{
+    padding:20px;
+    border-radius:22px;
+    background:var(--card);
+    border:1px solid var(--border);
+    backdrop-filter:blur(25px);
+    box-shadow:0 25px 80px #0008,inset 0 1px #ffffff08;
+    margin-bottom:25px;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+#eiin{
+    width:100%;
+    height:56px;
+    padding:0 140px 0 16px;
+    border-radius:14px;
+    outline:none;
+    border:1px solid #ffffff12;
+    background:#00000055;
+    color:var(--green);
+    font-size:15px;
+    font-weight:bold;
+}
+
+#eiin:focus{
+    border-color:#00ff9c66;
+    box-shadow:0 0 25px #00ff9c22;
+}
+
+#eiin::placeholder{
+    color:var(--green);
+    font-weight:normal;
+    opacity:.75;
+}
+
+.search-btn{
+    position:absolute;
+    right:6px;
+    top:6px;
+    height:44px;
+    padding:0 18px;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:900;
+    color:#fff;
+    background:linear-gradient(135deg,#ff0055,#00e5ff);
+    transition:transform .2s;
+}
+
+.search-btn:active{
+    transform:scale(.96);
+}
+
+.search-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.status{
+    display:none;
+    margin-top:12px;
+    padding:11px;
+    border-radius:10px;
+    background:#ffffff06;
+    color:#8affd0;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.results{
+    display:none;
+    margin:10px 0 45px;
+}
+
+.result-heading{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.result-heading h2{
+    font-size:20px;
+    color:var(--cyan);
+}
+
+.result-heading p{
+    color:#687282;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.teacher-counter-banner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:linear-gradient(135deg,rgba(255,0,85,.1),rgba(0,229,255,.05));
+    border:1px solid #ff005533;
+    padding:15px 20px;
+    border-radius:16px;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+.teacher-counter-banner .count-number{
+    color:#ff0055;
+    font-size:16px;
+    background:#ff005515;
+    padding:4px 12px;
+    border-radius:8px;
+    border:1px solid #ff005533;
+}
+
+.teacher-card-box-container{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    max-height:520px;
+    overflow-y:auto;
+    padding:5px;
+    margin-bottom:25px;
+}
+
+.teacher-item-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:linear-gradient(145deg,rgba(16,24,36,.9),rgba(10,24,36,.9));
+    border:1px solid rgba(255,255,255,.08);
+    padding:14px 16px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:all .25s ease;
+    box-shadow:0 4px 15px rgba(0,0,0,.3);
+}
+
+.teacher-item-card:hover{
+    border-color:#ff005566;
+    background:rgba(255,0,85,.06);
+    transform:translateY(-2px);
+}
+
+.teacher-info-left{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+}
+
+.teacher-name-title{
+    font-size:14px;
+    font-weight:bold;
+    color:#fff;
+    word-break:break-word;
+}
+
+.teacher-sub-detail{
+    font-size:11px;
+    color:var(--muted);
+}
+
+.teacher-view-btn{
+    background:linear-gradient(135deg,#ff00551a,#00e5ff22);
+    border:1px solid #ff005544;
+    color:var(--cyan);
+    padding:7px 12px;
+    border-radius:8px;
+    font-size:11px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.teacher-thumb{
+    width:52px;
+    height:52px;
+    border-radius:12px;
+    object-fit:cover;
+    border:1px solid rgba(0,229,255,.35);
+    flex-shrink:0;
+    background:#0a121c;
+}
+
+.teacher-thumb-placeholder{
+    width:52px;
+    height:52px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ff005522,#00e5ff22);
+    border:1px solid rgba(0,229,255,.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    flex-shrink:0;
+    color:var(--cyan);
+}
+
+.info-group{
+    margin-bottom:20px;
+    padding:18px;
+    border-radius:24px;
+    background:rgba(10,14,20,.58)!important;
+    border:1px solid rgba(180,235,255,.34);
+    backdrop-filter:blur(16px) saturate(115%);
+    -webkit-backdrop-filter:blur(16px) saturate(115%);
+    box-shadow:0 18px 50px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.detail-grid{
+    position:relative;
+}
+
+@property --detail-border-angle{
+    syntax:"<angle>";
+    inherits:false;
+    initial-value:0deg;
+}
+
+.detail-card{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    padding:13px;
+    min-height:70px;
+    border-radius:16px;
+    border:0;
+    background:rgba(18,22,29,.62)!important;
+    backdrop-filter:blur(14px) saturate(120%);
+    -webkit-backdrop-filter:blur(14px) saturate(120%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.20),
+      inset 0 -1px 0 rgba(255,255,255,.045),
+      0 7px 20px rgba(0,0,0,.22);
+    contain:paint;
+    cursor:pointer;
+}
+
+.detail-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    padding:2px;
+    border-radius:16px;
+    background:conic-gradient(
+      from var(--detail-border-angle),
+      #a8ff00 0deg,
+      #18ff62 55deg,
+      #00e5ff 120deg,
+      #1677ff 180deg,
+      #9b4dff 235deg,
+      #ff2d9a 290deg,
+      #a8ff00 360deg
+    );
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    animation:detailBorderRotate 1.6s linear infinite;
+    pointer-events:none;
+    z-index:0;
+}
+
+.detail-card::after{
+    content:"";
+    position:absolute;
+    inset:2px;
+    border-radius:14px;
+    background:linear-gradient(
+      180deg,
+      rgba(255,255,255,.085) 0%,
+      rgba(255,255,255,.025) 42%,
+      rgba(8,16,26,.16) 100%
+    );
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 0 18px rgba(255,255,255,.018);
+    pointer-events:none;
+    z-index:1;
+}
+
+.detail-card > *{
+    position:relative;
+    z-index:2;
+}
+
+@keyframes detailBorderRotate{
+    to{--detail-border-angle:360deg}
+}
+
+.image-card{
+    grid-column:1/-1;
+    text-align:center;
+}
+
+.group-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding-bottom:14px;
+    margin-bottom:14px;
+    border-bottom:1px solid #ffffff0b;
+}
+
+.group-icon{
+    width:40px;
+    height:40px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    background:linear-gradient(135deg,#ff0055,#00e5ff);
+}
+
+.group-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.group-subtitle{
+    color:#687282;
+    font-size:9px;
+    margin-top:3px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.detail-label{
+    color:var(--cyan);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    margin-bottom:5px;
+    font-weight:700;
+}
+
+.detail-value{
+    color:var(--green);
+    font-size:13px;
+    line-height:1.5;
+    word-break:break-word;
+    font-weight:bold;
+}
+
+.detail-value.missing{
+    color:var(--red);
+    font-weight:bold;
+}
+
+.api-image{
+    display:block;
+    width:min(220px,90%);
+    max-height:280px;
+    object-fit:cover;
+    margin:10px auto 0;
+    border-radius:16px;
+    border:2px solid rgba(0,229,255,.3);
+    box-shadow:0 0 25px rgba(0,229,255,.15);
+}
+
+.popup-bg{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(2,6,12,.88);
+    backdrop-filter:blur(12px);
+}
+
+.popup{
+    position:relative;
+    width:min(440px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    padding:30px 22px 22px;
+    border-radius:24px;
+    text-align:center;
+    background:linear-gradient(145deg,#09131ffa,#09223afa);
+    border:1px solid rgba(0,229,255,.4);
+    box-shadow:0 30px 100px #000,0 0 40px rgba(0,229,255,.2);
+    animation:popupIn .4s ease;
+}
+
+@keyframes popupIn{
+    from{opacity:0;transform:scale(.88) translateY(20px)}
+    to{opacity:1;transform:none}
+}
+
+.close{
+    position:absolute;
+    right:14px;
+    top:14px;
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:50%;
+    background:#ffffff0a;
+    color:var(--cyan);
+    font-size:18px;
+    cursor:pointer;
+    font-weight:bold;
+    border:1px solid rgba(0,229,255,.3);
+}
+
+footer{
+    text-align:center;
+    padding:25px 15px;
+    border-top:1px solid #ffffff08;
+    color:#687282;
+    font-size:11px;
+}
+
+footer a.dev-link{
+    text-decoration:none;
+    color:inherit;
+    cursor:pointer;
+}
+
+footer a.dev-link:hover{
+    text-decoration:underline;
+}
+
+.baijid-back-btn{
+    position:fixed;
+    top:0;
+    left:0;
+    padding:7px 11px;
+    border-radius:0 0 10px 0;
+    background:rgba(0,242,255,.12);
+    border:1px solid rgba(0,242,255,.45);
+    border-top:none;
+    border-left:none;
+    color:#00f2ff;
+    font-size:.68rem;
+    font-weight:600;
+    letter-spacing:.3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    z-index:9999;
+    box-shadow:0 3px 12px rgba(0,0,0,.35),0 0 10px rgba(0,242,255,.12),inset 0 1px 0 rgba(255,255,255,.08);
+    backdrop-filter:blur(10px) saturate(160%);
+    -webkit-backdrop-filter:blur(10px) saturate(160%);
+    transition:all .25s cubic-bezier(.4,0,.2,1);
+    white-space:nowrap;
+}
+
+.baijid-back-btn:hover{
+    background:rgba(0,242,255,.22);
+    border-color:#00f2ff;
+    color:#fff;
+    transform:scale(1.02);
+    box-shadow:0 5px 16px rgba(0,0,0,.45),0 0 16px rgba(0,242,255,.25),inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.baijid-back-btn:active{
+    transform:scale(.97);
+}
+
+.baijid-back-arrow{
+    font-size:.95rem;
+    line-height:1;
+    font-weight:900;
+    margin-right:5px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    vertical-align:middle;
+    transform:translateY(-1px);
+    text-shadow:0 0 8px #00f2ff;
+}
+
+html{
+    background:#000;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+}
+
+body{
+    background:#000!important;
+    overscroll-behavior-x:none;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.teacher-card-box-container,
+.detail-grid{
+    -webkit-overflow-scrolling:touch;
+}
+
+@media(max-width:600px){
+    .nav{padding:14px 3%}
+    .logo{font-size:12px}
+    .btn-social{font-size:10px;padding:6px 10px}
+    h1{font-size:32px}
+    .search-box{padding:15px}
+    #eiin{height:52px;font-size:14px;padding-right:110px}
+    .search-btn{height:40px;padding:0 12px;font-size:11px}
+    .detail-grid{grid-template-columns:1fr}
+    .baijid-back-btn{
+        padding:6px 9px;
+        font-size:.62rem;
+        border-radius:0 0 9px 0;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    .page-scan-line,
+    .detail-card::before,
+    .detail-card::after{
+        animation-duration:8s!important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-scan-line line1"></div>
+<div class="page-scan-line line2"></div>
+
+<a href="https://baijidalam.github.io/dark-cyber-homepage/"
+   class="baijid-back-btn"
+   title="Back to Home">
+  <span class="baijid-back-arrow">←</span>
+  <span>back home</span>
+</a>
+
+<div id="splashOverlay">
+    <div class="scanner-box">
+        <div class="scanner-title">TEAM SB DARK SECURITY</div>
+
+        <div class="scanner-desc">
+            ফিঙ্গারপ্রিন্ট আইকনে প্রেস করে ধরে রাখুন (Hold to scan)
+        </div>
+
+        <div class="fingerprint-icon"
+             id="fingerBtn"
+             onmousedown="startHoldScan(event)"
+             ontouchstart="startHoldScan(event)"
+             onmouseup="stopHoldScan(event)"
+             ontouchend="stopHoldScan(event)"
+             onmouseleave="stopHoldScan(event)">
+
+            <svg class="fingerprint-svg"
+                 viewBox="0 0 64 64"
+                 xmlns="http://www.w3.org/2000/svg"
+                 aria-label="Fingerprint"
+                 role="img">
+
+                <g fill="none"
+                   stroke="currentColor"
+                   stroke-width="2.7"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+
+                    <path d="M32 7C18.5 7 9 17.7 9 31.1"/>
+                    <path d="M55 31.1C55 17.7 45.5 7 32 7"/>
+                    <path d="M12 39.2C14.5 49.1 22.1 55.5 31.9 56.5"/>
+                    <path d="M52 39.2C49.5 49.1 41.9 55.5 32.1 56.5"/>
+                    <path d="M15.5 31.3C15.5 21.9 22.8 14.5 32 14.5C41.2 14.5 48.5 21.9 48.5 31.3"/>
+                    <path d="M19.5 38.1C20.8 45.4 25.4 50 32 50C38.6 50 43.2 45.4 44.5 38.1"/>
+                    <path d="M21.7 31.5C21.7 25.5 26.2 20.8 32 20.8C37.8 20.8 42.3 25.5 42.3 31.5"/>
+                    <path d="M25.8 37.2C26.5 41.2 28.6 43.8 32 43.8C35.4 43.8 37.5 41.2 38.2 37.2"/>
+                    <path d="M27.8 31.8C27.8 29.3 29.6 27.3 32 27.3C34.4 27.3 36.2 29.3 36.2 31.8"/>
+                    <path d="M32 30.1V36.2"/>
+                    <path d="M17.8 45.4C19.9 51.2 25 55.3 31.2 56.8"/>
+                    <path d="M46.2 45.4C44.1 51.2 39 55.3 32.8 56.8"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="scan-progress-bar">
+            <div class="scan-progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="scan-status-text" id="scanStatus">
+            PRESS & HOLD FINGERPRINT
+        </div>
+    </div>
+</div>
+
+<nav class="nav">
+
+    <div class="nav-buttons-left"></div>
+
+    <div class="logo">
+        <span class="brand-highlight">
+            BAIJID DARK CYBER 2.5
+        </span>
+    </div>
+
+    <div class="nav-buttons-right">
+
+        <a class="btn-social btn-telegram"
+           href="https://t.me/+qPKvzfv0c8BiMDY1"
+           target="_blank"
+           rel="noopener"
+           aria-label="Join our Telegram">
+
+            <svg class="telegram-icon"
+                 viewBox="0 0 24 24"
+                 aria-hidden="true">
+
+                <path d="M21.4 3.6 18.1 20c-.25 1.16-.92 1.45-1.87.91l-5.12-3.77-2.47 2.38c-.27.27-.5.5-1.02.5l.37-5.23 9.52-8.6c.41-.37-.09-.58-.64-.21L5.1 13.5.06 11.92c-1.1-.34-1.12-1.1.23-1.63L20 2.82c.92-.34 1.73.21 1.4.78Z"
+                      fill="currentColor"/>
+            </svg>
+
+            Telegram
+        </a>
+    </div>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+    <div class="badge">
+        <span class="badge-dot"></span>
+        TEAM DARK BS - FAST SCHOOL INFO SYSTEM
+    </div>
+
+    <h1>
+        EIIN NUMBER TO INFO FAST SYSTEM
+    </h1>
+
+    <p>
+        যেকোনো স্কুল বা কলেজের EIIN Number দিয়ে শিক্ষক-শিক্ষিকা ও প্রতিষ্ঠানের বিস্তারিত তথ্য খুঁজে নিন।
+    </p>
+
+</section>
+
+<div class="visitors">
+
+    <div class="visitor-box">
+
+        <div class="live">
+            <span class="live-dot"></span>
+            LIVE SYSTEM
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+            <div class="number" id="online">1</div>
+            <div class="visitor-label">Online Now (Realtime)</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+            <div class="number" id="total">1</div>
+            <div class="visitor-label">Total Visits (Realtime)</div>
+        </div>
+
+    </div>
+</div>
+
+<section class="search-box">
+
+<form id="searchForm">
+
+    <div class="input-wrap">
+
+        <input
+            id="eiin"
+            type="text"
+            inputmode="numeric"
+            maxlength="20"
+            autocomplete="off"
+            placeholder="Enter EIIN Number..."
+        >
+
+        <button class="search-btn"
+                id="searchBtn"
+                type="submit">
+            SEARCH FAST
+        </button>
+
+    </div>
+
+    <div class="status" id="status"></div>
+
+</form>
+
+</section>
+
+<section class="results" id="results">
+
+    <div class="result-heading">
+
+        <h2>
+            Institution & Teacher Information
+        </h2>
+
+        <p>
+            Extracted instantly via TEAM DARK CYBER 2.5 secure high-speed API
+        </p>
+
+    </div>
+
+    <div id="teacherSectionContainer"></div>
+
+    <div id="resultGrid"></div>
+
+</section>
+
+</main>
+
+<footer>
+
+    <span class="gradient">
+        Powered by TEAM DARK CYBER 2.5
+    </span>
+
+    <br><br>
+
+    <a href="https://baijidalam.github.io/dark-cyber-homepage/"
+       target="_blank"
+       rel="noopener"
+       class="dev-link">
+
+        <span class="gradient"
+              style="animation-direction:reverse;">
+            Developer - MD BAIJID ALAM
+        </span>
+
+    </a>
+
+</footer>
+
+<div class="popup-bg"
+     id="detailModal"
+     style="display:none;">
+
+    <div class="popup">
+
+        <button class="close"
+                onclick="closeDetailModal()">
+            ×
+        </button>
+
+        <h2 style="color:var(--cyan);margin-bottom:15px;">
+            Teacher Full Bio-Data
+        </h2>
+
+        <div id="modalContentGrid"
+             class="detail-grid"
+             style="text-align:left;">
+        </div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     EXISTING BACKGROUND / FINGERPRINT AUDIO
+========================================================= -->
+
+<audio id="bgAudio"
+       src="https://raw.githubusercontent.com/baijidalam/Oudio/main/page.m4a"
+       preload="auto"
+       autoplay
+       loop>
+</audio>
+
+
+<!-- =========================================================
+     NEW EIIN RESULT SOUNDS
+========================================================= -->
+
+<audio id="successSound"
+       src="https://raw.githubusercontent.com/baijidalam/Oudio/main/botton%20success%20sound%20effects%20(2).m4a"
+       preload="auto">
+</audio>
+
+<audio id="unsuccessSound"
+       src="https://raw.githubusercontent.com/baijidalam/Oudio/main/botton%20unsuccess%20sound%20effects.m4a"
+       preload="auto">
+</audio>
+
+<audio id="boxClickSound"
+       src="https://raw.githubusercontent.com/baijidalam/Oudio/main/clic%20box%20sound%20effects.m4a"
+       preload="auto">
+</audio>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+    getAuth,
+    signInAnonymously,
+    signInWithCustomToken
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    onSnapshot,
+    updateDoc,
+    increment,
+    collection
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+
+const appId =
+    typeof __app_id !== 'undefined'
+    ? __app_id
+    : 'team-mrex-eiin-app';
+
+
+const firebaseConfig =
+    typeof __firebase_config !== 'undefined'
+    ? JSON.parse(__firebase_config)
+    : {
+        apiKey:"AIzaSyDummyKeyForFallbackOnly",
+        authDomain:"dummy.firebaseapp.com",
+        projectId:"dummy-project"
+    };
+
+
+let db;
+let auth;
+
+
+try{
+
+    const app = initializeApp(firebaseConfig);
+
+    db = getFirestore(app);
+
+    auth = getAuth(app);
+
+}catch(e){
+
+    console.warn(
+        "Firebase offline or misconfigured, running in local fallback mode.",
+        e
+    );
+
+}
+
+
+async function initFirebaseCounters(){
+
+    if(!db || !auth){
+
+        let visits =
+            Number(
+                localStorage.getItem("team_mrex_visits") || 0
+            ) + 1;
+
+        localStorage.setItem(
+            "team_mrex_visits",
+            visits
+        );
+
+        document.getElementById("total").textContent =
+            visits;
+
+        document.getElementById("online").textContent =
+            "1";
+
+        return;
+    }
+
+
+    try{
+
+        if(
+            typeof __initial_auth_token !== 'undefined'
+            &&
+            __initial_auth_token
+        ){
+
+            await signInWithCustomToken(
+                auth,
+                __initial_auth_token
+            );
+
+        }else{
+
+            await signInAnonymously(auth);
+
+        }
+
+
+        const statsRef = doc(
+            db,
+            'artifacts',
+            appId,
+            'public',
+            'data',
+            'stats'
+        );
+
+
+        if(!sessionStorage.getItem("visited_counted")){
+
+            sessionStorage.setItem(
+                "visited_counted",
+                "1"
+            );
+
+            try{
+
+                await updateDoc(
+                    statsRef,
+                    {
+                        totalVisits:increment(1)
+                    }
+                );
+
+            }catch(err){
+
+                await setDoc(
+                    statsRef,
+                    {
+                        totalVisits:1
+                    },
+                    {
+                        merge:true
+                    }
+                );
+
+            }
+
+        }
+
+
+        onSnapshot(
+            statsRef,
+            (docSnap)=>{
+
+                if(docSnap.exists()){
+
+                    const data =
+                        docSnap.data();
+
+                    if(data.totalVisits){
+
+                        document.getElementById(
+                            "total"
+                        ).textContent =
+                            data.totalVisits;
+
+                    }
+
+                }else{
+
+                    setDoc(
+                        statsRef,
+                        {
+                            totalVisits:1
+                        }
+                    );
+
+                }
+
+            },
+            (err)=>{
+                console.error(
+                    "Stats error:",
+                    err
+                );
+            }
+        );
+
+
+        const sessionId =
+            Math.random()
+            .toString(36)
+            .substring(2);
+
+
+        const presenceRef = doc(
+            db,
+            'artifacts',
+            appId,
+            'public',
+            'data',
+            'presence_' + sessionId
+        );
+
+
+        await setDoc(
+            presenceRef,
+            {
+                lastSeen:Date.now()
+            }
+        );
+
+
+        setInterval(
+            async()=>{
+                try{
+
+                    await setDoc(
+                        presenceRef,
+                        {
+                            lastSeen:Date.now()
+                        },
+                        {
+                            merge:true
+                        }
+                    );
+
+                }catch(e){}
+            },
+            10000
+        );
+
+
+        onSnapshot(
+            collection(
+                db,
+                'artifacts',
+                appId,
+                'public',
+                'data'
+            ),
+            (snapshot)=>{
+
+                let activeCount = 0;
+
+                const now = Date.now();
+
+
+                snapshot.forEach(
+                    docSnap=>{
+
+                        const data =
+                            docSnap.data();
+
+                        if(
+                            docSnap.id.startsWith(
+                                'presence_'
+                            )
+                            &&
+                            data.lastSeen
+                        ){
+
+                            if(
+                                now - data.lastSeen
+                                <
+                                20000
+                            ){
+
+                                activeCount++;
+
+                            }
+
+                        }
+
+                    }
+                );
+
+
+                document.getElementById(
+                    "online"
+                ).textContent =
+                    Math.max(
+                        1,
+                        activeCount
+                    );
+
+            },
+            ()=>{
+                document.getElementById(
+                    "online"
+                ).textContent = "1";
+            }
+        );
+
+
+    }catch(e){
+
+        console.error(
+            "Firebase Auth/Sync Error:",
+            e
+        );
+
+        document.getElementById(
+            "total"
+        ).textContent = "1";
+
+        document.getElementById(
+            "online"
+        ).textContent = "1";
+
+    }
+
+}
+
+
+window.addEventListener(
+    "DOMContentLoaded",
+    initFirebaseCounters
+);
+
+</script>
+
+
+<script>
+
+/* =========================================================
+   EXISTING SECURITY / FINGERPRINT AUDIO
+========================================================= */
+
+let scanInterval = null;
+
+let scanProgress = 0;
+
+const HOLD_DURATION_MS = 2000;
+
+const bgAudio =
+    document.getElementById("bgAudio");
+
+const successSound =
+    document.getElementById("successSound");
+
+const unsuccessSound =
+    document.getElementById("unsuccessSound");
+
+const boxClickSound =
+    document.getElementById("boxClickSound");
+
+
+let audioStarted = false;
+
+let fadeInterval = null;
+
+let securityPageActive = true;
+
+
+/* =========================================================
+   NEW SOUND HELPER
+========================================================= */
+
+function playResultSound(audio){
+
+    if(!audio) return;
+
+    try{
+
+        audio.pause();
+
+        audio.currentTime = 0;
+
+        const promise = audio.play();
+
+        if(
+            promise &&
+            typeof promise.catch === "function"
+        ){
+
+            promise.catch(
+                ()=>{}
+            );
+
+        }
+
+    }catch(e){}
+
+}
+
+
+function playSuccessSound(){
+
+    playResultSound(
+        successSound
+    );
+
+}
+
+
+function playUnsuccessSound(){
+
+    playResultSound(
+        unsuccessSound
+    );
+
+}
+
+
+function playBoxClickSound(){
+
+    playResultSound(
+        boxClickSound
+    );
+
+}
+
+
+/* =========================================================
+   BACKGROUND AUDIO
+========================================================= */
+
+function playAudio(){
+
+    if(
+        !bgAudio ||
+        !securityPageActive
+    ) return;
+
+
+    try{
+
+        if(!bgAudio.paused){
+
+            bgAudio.volume = 1;
+
+            audioStarted = true;
+
+            return;
+
+        }
+
+
+        bgAudio.volume = 1;
+
+
+        if(bgAudio.ended){
+
+            bgAudio.currentTime = 0;
+
+        }
+
+
+        const p = bgAudio.play();
+
+
+        if(
+            p &&
+            typeof p.then === "function"
+        ){
+
+            p.then(()=>{
+
+                audioStarted = true;
+
+            }).catch(()=>{
+
+                audioStarted = false;
+
+            });
+
+        }else{
+
+            audioStarted = true;
+
+        }
+
+    }catch(e){
+
+        audioStarted = false;
+
+    }
+
+}
+
+
+function fadeOutAudio(durationMs){
+
+    if(!bgAudio) return;
+
+
+    if(fadeInterval){
+
+        clearInterval(
+            fadeInterval
+        );
+
+    }
+
+
+    const steps = 40;
+
+    const stepTime =
+        Math.max(
+            20,
+            durationMs / steps
+        );
+
+
+    let currentStep = 0;
+
+
+    const startVol =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                bgAudio.volume
+            )
+        );
+
+
+    if(
+        bgAudio.paused ||
+        startVol <= 0
+    ){
+
+        bgAudio.pause();
+
+        bgAudio.currentTime = 0;
+
+        bgAudio.volume = 1;
+
+        audioStarted = false;
+
+        return;
+
+    }
+
+
+    fadeInterval = setInterval(()=>{
+
+        currentStep++;
+
+
+        const progress =
+            Math.min(
+                currentStep / steps,
+                1
+            );
+
+
+        bgAudio.volume =
+            Math.max(
+                0,
+                startVol * (1 - progress)
+            );
+
+
+        if(progress >= 1){
+
+            clearInterval(
+                fadeInterval
+            );
+
+            fadeInterval = null;
+
+            bgAudio.pause();
+
+            bgAudio.currentTime = 0;
+
+            bgAudio.volume = 1;
+
+            audioStarted = false;
+
+        }
+
+    },stepTime);
+
+}
+
+
+/* =========================================================
+   SECURITY PAGE AUDIO AUTOPLAY
+========================================================= */
+
+(function setupSecurityPageAudio(){
+
+    if(!bgAudio) return;
+
+
+    bgAudio.preload = "auto";
+
+    bgAudio.autoplay = true;
+
+    bgAudio.loop = true;
+
+    bgAudio.volume = 1;
+
+
+    let autoplayStarted = false;
+
+
+    function tryAutoplay(){
+
+        if(!securityPageActive) return;
+
+
+        if(
+            autoplayStarted ||
+            !bgAudio.paused
+        ){
+
+            audioStarted = true;
+
+            autoplayStarted = true;
+
+            return;
+
+        }
+
+
+        try{
+
+            const p =
+                bgAudio.play();
+
+
+            if(
+                p &&
+                typeof p.then === "function"
+            ){
+
+                p.then(()=>{
+
+                    audioStarted = true;
+
+                    autoplayStarted = true;
+
+                }).catch(()=>{
+
+                    audioStarted = false;
+
+                    autoplayStarted = false;
+
+                });
+
+            }else{
+
+                audioStarted = true;
+
+                autoplayStarted = true;
+
+            }
+
+        }catch(e){
+
+            audioStarted = false;
+
+            autoplayStarted = false;
+
+        }
+
+    }
+
+
+    tryAutoplay();
+
+
+    bgAudio.addEventListener(
+        "canplay",
+        tryAutoplay,
+        {once:true}
+    );
+
+
+    bgAudio.addEventListener(
+        "canplaythrough",
+        tryAutoplay,
+        {once:true}
+    );
+
+
+    if(
+        document.readyState ===
+        "loading"
+    ){
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            tryAutoplay,
+            {once:true}
+        );
+
+    }
+
+
+    window.addEventListener(
+        "load",
+        tryAutoplay,
+        {once:true}
+    );
+
+
+    window.addEventListener(
+        "pageshow",
+        tryAutoplay,
+        {once:true}
+    );
+
+
+    let retries = 0;
+
+
+    const retryTimer =
+        setInterval(()=>{
+
+            retries++;
+
+            tryAutoplay();
+
+
+            if(
+                !securityPageActive ||
+                autoplayStarted ||
+                retries >= 30
+            ){
+
+                clearInterval(
+                    retryTimer
+                );
+
+            }
+
+        },250);
+
+
+    window.__securityAudioRetryTimer =
+        retryTimer;
+
+})();
+
+
+/* =========================================================
+   FINGERPRINT SCAN
+========================================================= */
+
+function startHoldScan(e){
+
+    e.preventDefault();
+
+
+    const btn =
+        document.getElementById(
+            "fingerBtn"
+        );
+
+
+    const fill =
+        document.getElementById(
+            "progressFill"
+        );
+
+
+    const status =
+        document.getElementById(
+            "scanStatus"
+        );
+
+
+    if(scanInterval) return;
+
+
+    playAudio();
+
+
+    btn.classList.add(
+        "scanning"
+    );
+
+
+    status.textContent =
+        "VERIFYING BIOMETRICS...";
+
+
+    const startTime =
+        Date.now();
+
+
+    scanInterval =
+        setInterval(()=>{
+
+            const elapsed =
+                Date.now() -
+                startTime;
+
+
+            scanProgress =
+                Math.min(
+                    (
+                        elapsed /
+                        HOLD_DURATION_MS
+                    ) * 100,
+                    100
+                );
+
+
+            fill.style.width =
+                scanProgress + "%";
+
+
+            if(
+                scanProgress >= 100
+            ){
+
+                clearInterval(
+                    scanInterval
+                );
+
+                scanInterval = null;
+
+
+                status.textContent =
+                    "ACCESS GRANTED ✓";
+
+
+                setTimeout(()=>{
+
+                    const overlay =
+                        document.getElementById(
+                            "splashOverlay"
+                        );
+
+
+                    securityPageActive =
+                        false;
+
+
+                    bgAudio.autoplay =
+                        false;
+
+
+                    bgAudio.loop =
+                        false;
+
+
+                    if(
+                        window.__securityAudioRetryTimer
+                    ){
+
+                        clearInterval(
+                            window.__securityAudioRetryTimer
+                        );
+
+                        window.__securityAudioRetryTimer =
+                            null;
+
+                    }
+
+
+                    overlay.style.opacity =
+                        "0";
+
+
+                    fadeOutAudio(
+                        2000
+                    );
+
+
+                    setTimeout(()=>{
+
+                        overlay.style.display =
+                            "none";
+
+                    },450);
+
+
+                },350);
+
+            }
+
+        },25);
+
+}
+
+
+function stopHoldScan(e){
+
+    if(!scanInterval) return;
+
+
+    clearInterval(
+        scanInterval
+    );
+
+
+    scanInterval = null;
+
+
+    if(scanProgress < 100){
+
+        const btn =
+            document.getElementById(
+                "fingerBtn"
+            );
+
+
+        const fill =
+            document.getElementById(
+                "progressFill"
+            );
+
+
+        const status =
+            document.getElementById(
+                "scanStatus"
+            );
+
+
+        btn.classList.remove(
+            "scanning"
+        );
+
+
+        scanProgress = 0;
+
+
+        fill.style.width =
+            "0%";
+
+
+        status.textContent =
+            "HOLD FINGERPRINT LONGER!";
+
+
+        setTimeout(()=>{
+
+            status.textContent =
+                "PRESS & HOLD FINGERPRINT";
+
+        },1000);
+
+    }
+
+}
+
+
+/* =========================================================
+   STOP BACKGROUND AUDIO WHEN PAGE LEAVES
+========================================================= */
+
+function stopAudioImmediately(){
+
+    try{
+
+        if(bgAudio){
+
+            bgAudio.pause();
+
+            bgAudio.currentTime = 0;
+
+            bgAudio.volume = 1;
+
+        }
+
+
+        audioStarted = false;
+
+
+        if(fadeInterval){
+
+            clearInterval(
+                fadeInterval
+            );
+
+            fadeInterval = null;
+
+        }
+
+    }catch(e){}
+
+}
+
+
+window.addEventListener(
+    "pagehide",
+    stopAudioImmediately
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    stopAudioImmediately
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    ()=>{
+
+        if(
+            document.visibilityState ===
+            "hidden"
+        ){
+
+            stopAudioImmediately();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   EIIN API
+========================================================= */
+
+const API =
+    "https://cxofb.nid-bd.my.id/eiin1.php?eiin=";
+
+
+function closeDetailModal(){
+
+    document.getElementById(
+        "detailModal"
+    ).style.display =
+        "none";
+
+}
+
+
+window.closeDetailModal =
+    closeDetailModal;
+
+
+const form =
+    document.getElementById(
+        "searchForm"
+    );
+
+
+const input =
+    document.getElementById(
+        "eiin"
+    );
+
+
+const button =
+    document.getElementById(
+        "searchBtn"
+    );
+
+
+const statusDiv =
+    document.getElementById(
+        "status"
+    );
+
+
+const results =
+    document.getElementById(
+        "results"
+    );
+
+
+const resultGrid =
+    document.getElementById(
+        "resultGrid"
+    );
+
+
+const teacherSectionContainer =
+    document.getElementById(
+        "teacherSectionContainer"
+    );
+
+
+/* =========================================================
+   INFORMATION BOX CLICK SOUND
+   Only plays after results are actually visible.
+========================================================= */
+
+results.addEventListener(
+    "click",
+    function(event){
+
+        const clickedBox =
+            event.target.closest(
+                ".detail-card, .teacher-item-card"
+            );
+
+
+        if(
+            clickedBox &&
+            results.style.display !== "none"
+        ){
+
+            playBoxClickSound();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+form.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const eiin =
+            input.value.trim();
+
+
+        /* Wrong / invalid EIIN */
+
+        if(
+            !/^[0-9]{3,20}$/.test(
+                eiin
+            )
+        ){
+
+            showStatus(
+                "⚠️ অনুগ্রহ করে সঠিক EIIN Number লিখুন।",
+                true
+            );
+
+
+            playUnsuccessSound();
+
+
+            input.focus();
+
+            return;
+
+        }
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "SEARCHING...";
+
+
+        resultGrid.innerHTML =
+            "";
+
+        teacherSectionContainer.innerHTML =
+            "";
+
+
+        results.style.display =
+            "none";
+
+
+        showStatus(
+            "🚀 FAST SYSTEM: তথ্য খোঁজা হচ্ছে...",
+            false
+        );
+
+
+        try{
+
+            const response =
+                await fetch(
+                    API +
+                    encodeURIComponent(eiin) +
+                    "&_=" +
+                    Date.now(),
+                    {
+                        method:"GET",
+                        cache:"no-store"
+                    }
+                );
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    "API Server Error"
+                );
+
+            }
+
+
+            const text =
+                await response.text();
+
+
+            let data;
+
+
+            try{
+
+                data =
+                    JSON.parse(text);
+
+            }catch(e){
+
+                data = {
+                    "API Response":
+                    text
+                };
+
+            }
+
+
+            /* 
+               renderData এখন true/false return করে।
+               true = আসল তথ্য পাওয়া গেছে
+               false = কোনো তথ্য নেই
+            */
+
+            const hasInformation =
+                renderData(data);
+
+
+            if(hasInformation){
+
+                results.style.display =
+                    "block";
+
+
+                showStatus(
+                    "✓ সফলভাবে তথ্য লোড হয়েছে!",
+                    false
+                );
+
+
+                playSuccessSound();
+
+
+                setTimeout(()=>{
+
+                    results.scrollIntoView({
+                        behavior:"smooth",
+                        block:"start"
+                    });
+
+                },100);
+
+
+            }else{
+
+                results.style.display =
+                    "block";
+
+
+                showStatus(
+                    "❌ এই EIIN Number-এর কোনো তথ্য পাওয়া যায়নি।",
+                    true
+                );
+
+
+                playUnsuccessSound();
+
+            }
+
+
+        }catch(error){
+
+            showStatus(
+                "❌ সার্ভার থেকে তথ্য পাওয়া যায়নি। দয়া করে আবার চেষ্টা করুন।",
+                true
+            );
+
+
+            playUnsuccessSound();
+
+        }
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "SEARCH FAST";
+
+    }
+);
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showStatus(
+    message,
+    isError
+){
+
+    statusDiv.style.display =
+        "block";
+
+
+    statusDiv.textContent =
+        message;
+
+
+    statusDiv.style.color =
+        isError
+        ? "#ff8999"
+        : "#8affd0";
+
+}
+
+
+/* =========================================================
+   CHECK WHETHER API DATA ACTUALLY CONTAINS INFORMATION
+========================================================= */
+
+function hasMeaningfulData(data){
+
+    if(
+        data === null ||
+        data === undefined
+    ){
+
+        return false;
+
+    }
+
+
+    if(Array.isArray(data)){
+
+        return data.length > 0;
+
+    }
+
+
+    if(typeof data === "object"){
+
+        const keys =
+            Object.keys(data);
+
+
+        if(keys.length === 0){
+
+            return false;
+
+        }
+
+
+        for(
+            const key of keys
+        ){
+
+            const value =
+                data[key];
+
+
+            if(
+                value === null ||
+                value === undefined
+            ){
+
+                continue;
+
+            }
+
+
+            if(
+                typeof value === "string" &&
+                value.trim() === ""
+            ){
+
+                continue;
+
+            }
+
+
+            if(
+                Array.isArray(value) &&
+                value.length === 0
+            ){
+
+                continue;
+
+            }
+
+
+            return true;
+
+        }
+
+    }
+
+
+    if(
+        typeof data === "string"
+    ){
+
+        return data.trim().length > 0;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   RENDER API DATA
+========================================================= */
+
+function renderData(data){
+
+    resultGrid.innerHTML =
+        "";
+
+    teacherSectionContainer.innerHTML =
+        "";
+
+
+    if(
+        !hasMeaningfulData(data)
+    ){
+
+        showEmpty();
+
+        return false;
+
+    }
+
+
+    let teachersList = [];
+
+
+    if(Array.isArray(data)){
+
+        teachersList =
+            data;
+
+    }else{
+
+        Object.keys(data)
+        .forEach(
+            key=>{
+
+                const val =
+                    data[key];
+
+
+                if(
+                    Array.isArray(val) &&
+                    val.length > 0 &&
+                    typeof val[0] === "object"
+                ){
+
+                    if(
+                        key.toLowerCase().includes("teacher") ||
+                        key.toLowerCase().includes("staff") ||
+                        key.toLowerCase().includes("list")
+                    ){
+
+                        teachersList =
+                            val;
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if(
+        teachersList.length > 0
+    ){
+
+        renderTeacherCardBox(
+            teachersList
+        );
+
+    }
+
+
+    if(Array.isArray(data)){
+
+        if(
+            teachersList.length > 0
+        ){
+
+            return true;
+
+        }
+
+        showEmpty();
+
+        return false;
+
+    }
+
+
+    let groupsFound =
+        false;
+
+
+    Object.keys(data)
+    .forEach(
+        key=>{
+
+            const value =
+                data[key];
+
+
+            if(
+                value === null ||
+                value === undefined
+            ){
+
+                return;
+
+            }
+
+
+            if(
+                value === teachersList
+            ){
+
+                return;
+
+            }
+
+
+            if(
+                Array.isArray(value)
+            ){
+
+                if(value.length === 0){
+
+                    return;
+
+                }
+
+
+                groupsFound =
+                    true;
+
+
+                value.forEach(
+                    (item,index)=>{
+
+                        createGroup(
+                            formatLabel(key) +
+                            " " +
+                            (index + 1),
+                            item
+                        );
+
+                    }
+                );
+
+
+                return;
+
+            }
+
+
+            if(
+                typeof value === "object"
+            ){
+
+                groupsFound =
+                    true;
+
+
+                createGroup(
+                    formatLabel(key),
+                    value
+                );
+
+
+                return;
+
+            }
+
+
+            if(
+                String(value).trim() !== ""
+            ){
+
+                groupsFound =
+                    true;
+
+            }
+
+        }
+    );
+
+
+    if(
+        !groupsFound &&
+        teachersList.length === 0
+    ){
+
+        createGroup(
+            "INSTITUTION DETAILS",
+            data
+        );
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   CLEAN NAME
+========================================================= */
+
+function cleanName(str){
+
+    if(
+        str === null ||
+        str === undefined
+    ){
+
+        return null;
+
+    }
+
+
+    let s =
+        String(str).trim();
+
+
+    if(!s) return null;
+
+
+    if(
+        (
+            s.startsWith("'") &&
+            s.endsWith("'")
+        ) ||
+        (
+            s.startsWith('"') &&
+            s.endsWith('"')
+        )
+    ){
+
+        s =
+            s.slice(
+                1,
+                -1
+            ).trim();
+
+    }
+
+
+    const onlyI =
+        /^[iI\s.]+$/.test(s);
+
+
+    const mostlyGarbage =
+        (
+            s.replace(
+                /[a-zA-Z0-9\u0980-\u09FF\s.\-]/g,
+                ""
+            ).length
+            >
+            s.length * .4
+        );
+
+
+    const tooManyI =
+        (
+            s.match(/i/gi) || []
+        ).length
+        >
+        s.length * .6;
+
+
+    if(
+        onlyI ||
+        mostlyGarbage ||
+        tooManyI
+    ){
+
+        return null;
+
+    }
+
+
+    return s;
+
+}
+
+
+function getBestName(
+    t,
+    idx
+){
+
+    const bn =
+        cleanName(
+            t.FullNameBn ||
+            t.fullNameBn
+        );
+
+
+    const en =
+        cleanName(
+            t.FullName ||
+            t.fullName
+        );
+
+
+    if(bn) return bn;
+
+    if(en) return en;
+
+
+    return `শিক্ষক #${idx + 1}`;
+
+}
+
+
+/* =========================================================
+   TEACHER CARD
+========================================================= */
+
+function renderTeacherCardBox(
+    teachers
+){
+
+    const container =
+        document.createElement(
+            "div"
+        );
+
+
+    const banner =
+        document.createElement(
+            "div"
+        );
+
+
+    banner.className =
+        "teacher-counter-banner";
+
+
+    banner.innerHTML = `
+        <span>👨‍🏫 মোট শিক্ষক ও স্টাফ তালিকা</span>
+        <span class="count-number">
+            ${teachers.length} জন
+        </span>
+    `;
+
+
+    container.appendChild(
+        banner
+    );
+
+
+    const cardBox =
+        document.createElement(
+            "div"
+        );
+
+
+    cardBox.className =
+        "teacher-card-box-container";
+
+
+    teachers.forEach(
+        (t,idx)=>{
+
+            const nameVal =
+                getBestName(
+                    t,
+                    idx
+                );
+
+
+            const subVal =
+                cleanName(
+                    t.DesignationNameBn ||
+                    t.Designation ||
+                    t.designationNameBn
+                )
+                ||
+                "শিক্ষক";
+
+
+            let photoUrl =
+                null;
+
+
+            Object.keys(t)
+            .forEach(
+                k=>{
+
+                    const v =
+                        t[k];
+
+
+                    if(
+                        v &&
+                        typeof v === "string" &&
+                        (
+                            isImageKey(k) ||
+                            isImageURL(v)
+                        )
+                    ){
+
+                        photoUrl =
+                            v;
+
+                    }
+
+                }
+            );
+
+
+            const cardItem =
+                document.createElement(
+                    "div"
+                );
+
+
+            cardItem.className =
+                "teacher-item-card";
+
+
+            cardItem.innerHTML = `
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:12px;
+                    flex:1;
+                    min-width:0;
+                ">
+
+                    ${
+                        photoUrl
+                        ?
+                        `
+                        <img
+                            src="${escapeHTML(photoUrl)}"
+                            alt=""
+                            class="teacher-thumb"
+                            onerror="
+                                this.style.display='none';
+                                this.nextElementSibling.style.display='flex';
+                            "
+                        >
+
+                        <div
+                            class="teacher-thumb-placeholder"
+                            style="display:none;"
+                        >
+                            👤
+                        </div>
+                        `
+                        :
+                        `
+                        <div class="teacher-thumb-placeholder">
+                            👤
+                        </div>
+                        `
+                    }
+
+                    <div class="teacher-info-left">
+
+                        <div class="teacher-name-title">
+                            ${idx + 1}.
+                            ${escapeHTML(String(nameVal))}
+                        </div>
+
+                        <div class="teacher-sub-detail">
+                            ${escapeHTML(String(subVal))}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="teacher-view-btn">
+                    বায়োডাটা দেখুন 👆
+                </div>
+            `;
+
+
+            cardItem.onclick =
+                ()=>{
+                    showTeacherDetail(t);
+                };
+
+
+            cardBox.appendChild(
+                cardItem
+            );
+
+        }
+    );
+
+
+    container.appendChild(
+        cardBox
+    );
+
+
+    teacherSectionContainer.appendChild(
+        container
+    );
+
+}
+
+
+/* =========================================================
+   TEACHER DETAIL
+========================================================= */
+
+window.showTeacherDetail =
+function(teacherObj){
+
+    const grid =
+        document.getElementById(
+            "modalContentGrid"
+        );
+
+
+    grid.innerHTML =
+        "";
+
+
+    const fields = [
+
+        {key:"Id",label:"Id"},
+        {key:"EmpId",label:"Emp Id"},
+        {key:"FullName",label:"Full Name"},
+        {key:"FullNameBn",label:"Full Name Bn"},
+        {key:"MobileNo",label:"Mobile No"},
+        {key:"DesignationNameBn",label:"Designation Name Bn"},
+        {key:"DistrictName",label:"District Name"},
+        {key:"SubjectName",label:"Subject Name"},
+        {key:"IndexNo",label:"Index No"},
+        {key:"Email",label:"Email"},
+        {key:"DateofBirth",label:"Date of Birth"},
+        {key:"InstituteManagementTypeId",label:"Institute Management Type Id"},
+        {key:"InstituteInstituteCategoryId",label:"Institute Institute Category Id"},
+        {key:"InstituteInstituteNameInBangla",label:"Institute Institute Name In Bangla"},
+        {key:"DesignationType",label:"Designation Type"},
+        {key:"PresentDesignationType",label:"Present Designation Type"},
+        {key:"JoiningDate",label:"Joining Date"},
+        {key:"PresentJoiningDate",label:"Present Joining Date"},
+        {key:"OSDJoiningDate",label:"OSD Joining Date"},
+        {key:"OthersJoiningDate",label:"Others Joining Date"},
+        {key:"BCSBatchEn",label:"BCS Batch En"},
+        {key:"BCSBatchBn",label:"BCS Batch Bn"}
+
+    ];
+
+
+    let photoUrl =
+        null;
+
+
+    Object.keys(teacherObj)
+    .forEach(
+        k=>{
+
+            const v =
+                teacherObj[k];
+
+
+            if(
+                v &&
+                typeof v === "string" &&
+                (
+                    isImageKey(k) ||
+                    isImageURL(v)
+                )
+            ){
+
+                photoUrl =
+                    v;
+
+            }
+
+        }
+    );
+
+
+    if(photoUrl){
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "detail-card image-card";
+
+
+        card.innerHTML = `
+            <div class="detail-label">
+                ছবি / Image
+            </div>
+
+            <img
+                class="api-image"
+                src="${escapeHTML(photoUrl)}"
+                alt="Photo"
+                onerror="
+                    this.parentElement.innerHTML=
+                    '<div class=\\'detail-label\\'>
+                    ছবি / Image
+                    </div>
+                    <div class=\\'detail-value missing\\'
+                    style=\\'text-align:center;padding:20px;\\'>
+                    👤<br>
+                    ছবি পাওয়া যায়নি
+                    </div>'
+                "
+            />
+        `;
+
+
+        grid.appendChild(
+            card
+        );
+
+    }else{
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "detail-card image-card";
+
+
+        card.innerHTML = `
+            <div class="detail-label">
+                ছবি / Image
+            </div>
+
+            <div
+                class="detail-value missing"
+                style="
+                    text-align:center;
+                    padding:28px 10px;
+                    font-size:36px;
+                "
+            >
+                👤
+                <br>
+
+                <span style="font-size:13px;">
+                    ছবি পাওয়া যায়নি
+                </span>
+
+            </div>
+        `;
+
+
+        grid.appendChild(
+            card
+        );
+
+    }
+
+
+    fields.forEach(
+        f=>{
+
+            let raw =
+                teacherObj[f.key];
+
+
+            let isMissing =
+                false;
+
+
+            let display =
+                "";
+
+
+            if(
+                raw === null ||
+                raw === undefined
+            ){
+
+                isMissing =
+                    true;
+
+            }else if(
+                typeof raw === "number"
+            ){
+
+                display =
+                    String(raw);
+
+            }else{
+
+                display =
+                    String(raw).trim();
+
+
+                if(
+                    display.startsWith("'") &&
+                    display.endsWith("'")
+                ){
+
+                    display =
+                        display.slice(
+                            1,
+                            -1
+                        ).trim();
+
+                }
+
+
+                if(
+                    display === "" ||
+                    display.toUpperCase() === "NULL" ||
+                    display === "-" ||
+                    display === "N/A" ||
+                    display.toLowerCase() === "not@vailable.com"
+                ){
+
+                    isMissing =
+                        true;
+
+                }
+
+
+                if(
+                    (
+                        f.key === "FullName" ||
+                        f.key === "FullNameBn"
+                    )
+                    &&
+                    cleanName(display) === null
+                ){
+
+                    isMissing =
+                        true;
+
+                }
+
+            }
+
+
+            if(isMissing){
+
+                display =
+                    "তথ্য নেই";
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "detail-card";
+
+
+            card.innerHTML = `
+                <div class="detail-label">
+                    ${escapeHTML(f.label)}
+                </div>
+
+                <div class="detail-value${
+                    isMissing
+                    ? " missing"
+                    : ""
+                }">
+                    ${escapeHTML(display)}
+                </div>
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "detailModal"
+    ).style.display =
+        "flex";
+
+};
+
+
+/* =========================================================
+   CREATE INFORMATION GROUP
+========================================================= */
+
+function createGroup(
+    title,
+    data
+){
+
+    const group =
+        document.createElement(
+            "div"
+        );
+
+
+    group.className =
+        "info-group";
+
+
+    const header =
+        document.createElement(
+            "div"
+        );
+
+
+    header.className =
+        "group-head";
+
+
+    header.innerHTML = `
+        <div class="group-icon">
+            ⚡
+        </div>
+
+        <div>
+
+            <div class="group-title">
+                ${escapeHTML(title)}
+            </div>
+
+            <div class="group-subtitle">
+                TEAM DARK CYBER 2.5 Verified Data
+            </div>
+
+        </div>
+    `;
+
+
+    group.appendChild(
+        header
+    );
+
+
+    const detailGrid =
+        document.createElement(
+            "div"
+        );
+
+
+    detailGrid.className =
+        "detail-grid";
+
+
+    if(
+        data &&
+        typeof data === "object"
+    ){
+
+        Object.keys(data)
+        .forEach(
+            key=>{
+
+                const value =
+                    data[key];
+
+
+                if(
+                    value === null ||
+                    value === undefined ||
+                    value === ""
+                ){
+
+                    return;
+
+                }
+
+
+                if(
+                    typeof value === "object" &&
+                    !Array.isArray(value)
+                ){
+
+                    createNestedDetails(
+                        detailGrid,
+                        key,
+                        value
+                    );
+
+                    return;
+
+                }
+
+
+                if(
+                    Array.isArray(value)
+                ){
+
+                    addTextCard(
+                        detailGrid,
+                        key,
+                        value.join(", ")
+                    );
+
+                    return;
+
+                }
+
+
+                if(
+                    isImageURL(
+                        String(value)
+                    )
+                    ||
+                    isImageKey(key)
+                ){
+
+                    addImageCard(
+                        detailGrid,
+                        key,
+                        String(value)
+                    );
+
+                    return;
+
+                }
+
+
+                addTextCard(
+                    detailGrid,
+                    key,
+                    String(value)
+                );
+
+            }
+        );
+
+    }else{
+
+        addTextCard(
+            detailGrid,
+            "Information",
+            String(data)
+        );
+
+    }
+
+
+    group.appendChild(
+        detailGrid
+    );
+
+
+    resultGrid.appendChild(
+        group
+    );
+
+}
+
+
+/* =========================================================
+   TEXT CARD
+========================================================= */
+
+function addTextCard(
+    parent,
+    key,
+    value
+){
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "detail-card";
+
+
+    card.innerHTML = `
+        <div class="detail-label">
+            ${escapeHTML(formatLabel(key))}
+        </div>
+
+        <div class="detail-value">
+            ${escapeHTML(value)}
+        </div>
+    `;
+
+
+    parent.appendChild(
+        card
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE CARD
+========================================================= */
+
+function addImageCard(
+    parent,
+    key,
+    url
+){
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "detail-card image-card";
+
+
+    const label =
+        document.createElement(
+            "div"
+        );
+
+
+    label.className =
+        "detail-label";
+
+
+    label.textContent =
+        formatLabel(key);
+
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+
+    image.className =
+        "api-image";
+
+
+    image.src =
+        url;
+
+
+    image.alt =
+        formatLabel(key);
+
+
+    image.loading =
+        "lazy";
+
+
+    image.onerror =
+        function(){
+
+            card.remove();
+
+        };
+
+
+    card.appendChild(
+        label
+    );
+
+
+    card.appendChild(
+        image
+    );
+
+
+    parent.appendChild(
+        card
+    );
+
+}
+
+
+/* =========================================================
+   NESTED DETAILS
+========================================================= */
+
+function createNestedDetails(
+    parent,
+    key,
+    object
+){
+
+    Object.keys(object)
+    .forEach(
+        subKey=>{
+
+            const value =
+                object[subKey];
+
+
+            if(
+                value === null ||
+                value === undefined ||
+                value === ""
+            ){
+
+                return;
+
+            }
+
+
+            if(
+                typeof value === "object"
+            ){
+
+                if(
+                    Array.isArray(value)
+                ){
+
+                    addTextCard(
+                        parent,
+                        subKey,
+                        value.join(", ")
+                    );
+
+                }else{
+
+                    createNestedDetails(
+                        parent,
+                        subKey,
+                        value
+                    );
+
+                }
+
+
+                return;
+
+            }
+
+
+            if(
+                isImageURL(
+                    String(value)
+                )
+                ||
+                isImageKey(subKey)
+            ){
+
+                addImageCard(
+                    parent,
+                    subKey,
+                    String(value)
+                );
+
+
+                return;
+
+            }
+
+
+            addTextCard(
+                parent,
+                subKey,
+                String(value)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE DETECTION
+========================================================= */
+
+function isImageURL(value){
+
+    const clean =
+        value
+        .split("?")[0]
+        .toLowerCase();
+
+
+    return (
+        /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i
+        .test(clean)
+    )
+    ||
+    /^data:image\//i.test(
+        value
+    );
+
+}
+
+
+function isImageKey(key){
+
+    const k =
+        String(key)
+        .toLowerCase();
+
+
+    return (
+        k.includes("image") ||
+        k.includes("img") ||
+        k.includes("photo") ||
+        k.includes("picture") ||
+        k.includes("avatar") ||
+        k.includes("profile") ||
+        k.includes("pic")
+    );
+
+}
+
+
+/* =========================================================
+   EMPTY RESULT
+========================================================= */
+
+function showEmpty(){
+
+    const box =
+        document.createElement(
+            "div"
+        );
+
+
+    box.className =
+        "info-group";
+
+
+    box.innerHTML = `
+        <div style="
+            text-align:center;
+            padding:25px;
+        ">
+
+            <h3>
+                No Information Found
+            </h3>
+
+            <p style="
+                color:#687282;
+                font-size:12px;
+                margin-top:7px;
+            ">
+                এই EIIN Number-এর জন্য কোনো তথ্য পাওয়া যায়নি।
+                সঠিক নম্বর দিয়ে পুনরায় চেষ্টা করুন।
+            </p>
+
+        </div>
+    `;
+
+
+    resultGrid.appendChild(
+        box
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT LABEL
+========================================================= */
+
+function formatLabel(text){
+
+    return String(text)
+
+        .replace(
+            /[_-]+/g,
+            " "
+        )
+
+        .replace(
+            /([a-z])([A-Z])/g,
+            "$1 $2"
+        )
+
+        .replace(
+            /\s+/g,
+            " "
+        )
+
+        .trim()
+
+        .replace(
+            /\b\w/g,
+            c=>c.toUpperCase()
+        );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+</body>
+</html>
